@@ -1,4 +1,3 @@
 # Portfolio
 
-https://grizzliusmaximus.github.io/
-```
+Checkout Pages: https://grizzliusmaximus.github.io/
