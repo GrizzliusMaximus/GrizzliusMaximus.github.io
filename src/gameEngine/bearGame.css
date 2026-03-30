@@ -1,0 +1,36 @@
+.bearsprite {
+  z-index: 100;
+  width: 32px;
+  height: 36px;
+  background-size: 512px 36px;
+  background-image: url("../assets/running_bear_sheet.png");
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+
+  animation: bearplay 1s infinite steps(16);
+}
+
+.bearsprite.idle {
+  background-image: url("../assets/idle_bear_sheet.png");
+  background-size: 288px 36px;
+  animation: idlebearplay 2s infinite steps(9);
+
+}
+
+@keyframes idlebearplay {
+  from {
+    background-position: 0px;
+  }
+  to {
+    background-position: -288px;
+  }
+}
+
+@keyframes bearplay {
+  from {
+    background-position: 0px;
+  }
+  to {
+    background-position: -512px;
+  }
+}

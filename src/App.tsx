@@ -1,93 +1,29 @@
-import { useState, useRef } from 'react'
-import { CounterHandler, useCounterContext } from './gameEngine/CounterContext';
-import runningBear from './assets/running_bear.svg'
-import chico from './assets/chico.png'
+
+import BearGame from './gameEngine/BearGame';
+import Hobbies from './Hobbies/Hobbies';
+// import runningBear from './assets/running_bear.svg'
+import chico from './assets/chico_halffull.png'
 import robojack from './assets/robojack.gif'
+
 
 import './App.css'
 
-
-const actionStateType = {
-  idle: 0,
-  moving: 1,
-}
-
-function Child({key = 0} : {key?: number}) {
-  const counterContext = useCounterContext();
-  const actionStateRef = useRef(actionStateType.moving);
-  const xRef = useRef(Math.floor(Math.random()*window.innerWidth/5 - 10));
-  const dirRef = useRef(Math.round(Math.random())*2-1);
-  const prevWinWidthRef = useRef(window.innerWidth);
-  var actionState = actionStateRef.current;
-  var x = xRef.current;
-  var dir = dirRef.current;
-  var prevWinWidth = prevWinWidthRef.current;
-  const { useFixedUpdate, useWindowSizeUpdate } = counterContext;
-  useFixedUpdate(() => {
-    actionState = actionStateRef.current;
-    x = xRef.current;
-    dir = dirRef.current;
-    if (actionState === actionStateType.moving) {
-      if (x + dir > window.innerWidth/5 - 10) {
-        dir = -1;
-      }
-      if (x + dir < 0) {
-        dir = 1;
-      }
-      x += dir;
-      if (Math.random() < 0.1) actionState = actionStateType.idle;
-    } else if (Math.random() < 0.1) {
-        actionState = actionStateType.moving;
-        dir = Math.round(Math.random())*2-1;
-    }
-    actionStateRef.current = actionState;
-    xRef.current = x;
-    dirRef.current = dir;
-    
-  });
-
-  useWindowSizeUpdate(() => {
-    prevWinWidth = prevWinWidthRef.current;
-    xRef.current *= window.innerWidth/prevWinWidth;
-    prevWinWidthRef.current = window.innerWidth;
-  });
-
-  return (
-    <img src={runningBear} className="base"  height="36" alt="" key={key} style={{position:'fixed', left:x*5, bottom:0, transform: `scaleX(${dir})`}} />
-  )
-}
-
 function App() {
-  const [ objCount, setObjCount ] = useState<typeof Child[]>([]);
   return (
     <>
-      <CounterHandler>
-        { objCount.map((Obj, i) => <Obj key={i} />) }
-      </CounterHandler>
-      <section id="center">
-        <div className="hero">
-          <h1>- CHICO</h1><img src={runningBear} className="base"  height="150" alt="" /><h1>PEREZ -</h1>
-        </div>
+      <section id = 'header'>
+        <h3>This page is still a work in progress... Big changes are coming soon!</h3>
         <div>
-          <h1>This page is still a work in progress</h1>
-          <p>
-            Big changes are coming soon!
-          </p>
+          <img src={chico} className="base fade-in-item" alt="" 
+              style={{
+              width: '100%',
+              objectFit: 'cover',
+            }} 
+          />
         </div>
-        <button
-          className="counter"
-          onClick={() => setObjCount(x => [...x, Child])}
-        >
-          Count is {objCount.length}
-        </button>
+        <BearGame />
       </section>
-      <section id="center">
-        <div className="ticks"></div>
-        <img src={chico} className="base" width="100%" alt="" />
-      </section>
-
-      <div className="ticks"></div>
-
+      <Hobbies />
       <section id="next-steps">
         <div id="docs">
           <a href="https://grizzliusmaximus.itch.io/neorobojack" target="_blank">
@@ -125,30 +61,7 @@ function App() {
           <h2>Beartopia</h2>
           <p>Water Shaders, Infinite Generated Worlds, Full Optimization</p>
         </div>  
-      </section>
-      <section id="next-steps"></section>
-        {/* <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>  
-      </section> */}
+      </section>      
       <section id="next-steps">
         <div id="social">
           <svg className="icon" role="presentation" aria-hidden="true">
@@ -169,18 +82,6 @@ function App() {
                 GitHub
               </a>
             </li>
-            {/* <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li> */}
             <li>
               <a href="https://grizzliusmaximus.itch.io/" target="_blank">
                 <svg
@@ -204,8 +105,6 @@ function App() {
           </ul>
         </div>
       </section>
-
-      <div className="ticks"></div>
       <section id="spacer"></section>
     </>
   )
